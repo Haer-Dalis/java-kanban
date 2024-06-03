@@ -1,17 +1,16 @@
 package task;
 
 public class Task {
+    protected int id;
+    protected String name;
+    protected String description;
+    protected Status status;
 
     public Task(String name, String description, Status status) {
         this.name = name;
         this.description = description;
         this.status = status;
     }
-
-    public int id;
-    public String name;
-    public String description;
-    public Status status;
 
     public Task(String name, String description) {
         this.name = name;

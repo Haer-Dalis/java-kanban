@@ -3,12 +3,11 @@ package task;
 import java.util.ArrayList;
 
 public class Epic extends Task {
+    private ArrayList<Integer> subtasksFromEpic = new ArrayList<>();
 
     public Epic(String name, String description) {
         super(name, description);
     }
-
-    public ArrayList<Integer> subtasksFromEpic = new ArrayList<>();
 
     public ArrayList<Integer> getSubtasksOfEpic() {
         return new ArrayList<>(subtasksFromEpic);
@@ -24,6 +23,10 @@ public class Epic extends Task {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public void deleteAllEpicSubtasks() {
+        subtasksFromEpic.clear();
     }
 
     @Override
