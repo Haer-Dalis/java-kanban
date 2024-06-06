@@ -1,6 +1,7 @@
 package task;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Epic extends Task {
     private ArrayList<Integer> subtasksFromEpic = new ArrayList<>();
@@ -38,6 +39,19 @@ public class Epic extends Task {
                 ", description='" + description + '\'' +
                 ", status=" + status +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (this.getClass() != obj.getClass()) return false;
+        Epic otherTask = (Epic) obj;
+        return Objects.equals(getName(), otherTask.getName()) &&
+                Objects.equals(getStatus(), otherTask.getStatus()) &&
+                Objects.equals(getDescription(), otherTask.getDescription()) &&
+                Objects.equals(getSubtasksOfEpic(), otherTask.getSubtasksOfEpic()) &&
+                (getId() == otherTask.getId());
     }
 }
 

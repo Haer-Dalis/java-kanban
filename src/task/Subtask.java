@@ -1,5 +1,7 @@
 package task;
 
+import java.util.Objects;
+
 public class Subtask extends Task {
     private int epicId;
 
@@ -21,5 +23,18 @@ public class Subtask extends Task {
                 ", description='" + description + '\'' +
                 ", status=" + status +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (this.getClass() != obj.getClass()) return false;
+        Subtask otherTask = (Subtask) obj;
+        return Objects.equals(getName(), otherTask.getName()) &&
+                Objects.equals(getStatus(), otherTask.getStatus()) &&
+                Objects.equals(getDescription(), otherTask.getDescription()) &&
+                getEpicId() == otherTask.getEpicId() &&
+                (getId() == otherTask.getId());
     }
 }

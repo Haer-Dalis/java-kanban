@@ -1,5 +1,7 @@
 package task;
 
+import java.util.Objects;
+
 public class Task {
     protected int id;
     protected String name;
@@ -21,12 +23,20 @@ public class Task {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public Status getStatus() {
         return status;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     @Override
@@ -37,5 +47,17 @@ public class Task {
                 ", description='" + description + '\'' +
                 ", status=" + status +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (this.getClass() != obj.getClass()) return false;
+        Task otherTask = (Task) obj;
+        return Objects.equals(getName(), otherTask.getName()) &&
+                Objects.equals(getStatus(), otherTask.getStatus()) &&
+                Objects.equals(getDescription(), otherTask.getDescription()) &&
+                (getId() == otherTask.getId());
     }
 }
