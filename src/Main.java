@@ -23,8 +23,6 @@ public class Main {
         System.out.println("Список задач " + inMemoryTaskManager.getTaskList());
         System.out.println("Список подзадач " + inMemoryTaskManager.getSubtaskList());
 
-
-
         inMemoryTaskManager.deleteTask(1);
         inMemoryTaskManager.deleteEpic(3);
 
@@ -34,5 +32,7 @@ public class Main {
         System.out.println("Список эпиков " + inMemoryTaskManager.getEpicList());
         System.out.println("Список задач " + inMemoryTaskManager.getTaskList());
         System.out.println("Список подзадач " + inMemoryTaskManager.getSubtaskList());
+
+
     }
 }

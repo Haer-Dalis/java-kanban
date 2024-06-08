@@ -61,3 +61,4 @@ public class Task {
                 (getId() == otherTask.getId());
     }
 }
+

@@ -10,15 +10,15 @@ import static org.junit.jupiter.api.Assertions.*;
 import static task.Status.NEW;
 
 class HistoryManagerTest {
+    private HistoryManager historyManager;
 
     @BeforeEach
     void setUp() {
-        HistoryManager historyManager = Managers.getDefaultHistory();
+        historyManager = Managers.getDefaultHistory();
     }
 
     @Test
     void add() {
-        HistoryManager historyManager = Managers.getDefaultHistory();
         historyManager.add(new Task("Написать расписание", "Самое основное дело", NEW));
         final List<Task> history = historyManager.getHistory();
         assertNotNull(history, "История не пустая.");
