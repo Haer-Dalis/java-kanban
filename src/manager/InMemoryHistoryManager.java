@@ -24,7 +24,6 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
         linkLast(task);
         nodes.put(task.getId(), last);
-
     }
 
     @Override
@@ -37,29 +36,28 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
     private void removeNode(Node node) {
-        if (node.next == null && node.prev == null) { // Единственный элемент
+        if (node.getNext() == null && node.getPrev() == null) { // Единственный элемент
             last = null;
             first = null;
-        } else if (node.next == null) { // Последний элемент
-            last = node.prev;
-            last.next = null;
-        } else if (node.prev == null) { // Первый элемент
-            first = node.next;
-            first.prev = null;
+        } else if (node.getNext() == null) { // Последний элемент
+            last = node.getPrev();
+            last.setNext(null);
+        } else if (node.getPrev() == null) { // Первый элемент
+            first = node.getNext();
+            first.setPrev(null);
         } else { //Середина
-            node.prev.next = node.next;
-            node.next.prev = node.prev;
+            node.getPrev().setNext(node.getNext());
+            node.getNext().setPrev(node.getPrev());
         }
 
     }
-
 
     private void linkLast(Task task) {
         Node newNode = new Node(task, last, null);
         if (first == null) {
             first = newNode;
         } else {
-            last.next = newNode;
+            last.setNext(newNode);
         }
         last = newNode;
     }
@@ -68,9 +66,9 @@ public class InMemoryHistoryManager implements HistoryManager {
         List<Task> history = new ArrayList<>();
         Node node = first;
         while (true) {
-            history.add(node.task);
-            if (node.next != null) {
-                node = node.next;
+            history.add(node.getTask());
+            if (node.getNext() != null) {
+                node = node.getNext();
             } else {
                 break;
             }
