@@ -1,5 +1,6 @@
 package manager;
 
+import exception.ManagerSaveException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import task.Epic;
@@ -20,14 +21,14 @@ class TaskManagerTest {
     private int taskId;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws ManagerSaveException {
         taskManager = Managers.getDefault();
         genericTask = new Task("Test addNewTask", "Test addNewTask description", NEW);
         taskId = taskManager.addTask(genericTask);
     }
 
     @Test
-    void addNewTask() {
+    void addNewTask() throws ManagerSaveException {
         final Task savedTask = taskManager.getTask(taskId);
 
         assertNotNull(savedTask, "Задача не найдена.");
@@ -41,7 +42,7 @@ class TaskManagerTest {
     }
 
     @Test
-    public void testTaskEqualityById() {
+    public void testTaskEqualityById() throws ManagerSaveException {
         Task taskOne = taskManager.getTask(1);
         Task taskTwo = taskManager.getTask(1);
         System.out.println("Сравниваем задачи: " + taskOne.equals(taskTwo));
@@ -56,7 +57,7 @@ class TaskManagerTest {
     }
 
     @Test
-    public void testEpicSubtaskEqualityById() {
+    public void testEpicSubtaskEqualityById() throws ManagerSaveException {
         taskManager.addEpic(new Epic("Написать программу", "Непреодолимое дело"));
         Epic epicOne = taskManager.getEpic(2);
         Epic epicTwo = taskManager.getEpic(2);
@@ -68,7 +69,7 @@ class TaskManagerTest {
     }
 
     @Test
-    public void testTaskManagerAddsTasksOfDifferentTypesAndCanFindThemById() {
+    public void testTaskManagerAddsTasksOfDifferentTypesAndCanFindThemById() throws ManagerSaveException {
         Epic epic = new Epic("Написать программу", "Непреодолимое дело");
         Subtask subtask = new Subtask("Пробовать писать код", "Это сложно", Status.IN_PROGRESS, 2);
         taskManager.addEpic(epic);
@@ -79,29 +80,29 @@ class TaskManagerTest {
     }
 
     @Test
-    public void testGenegtedIdAndDesignatedIdDontConflict() {
+    public void testGenegtedIdAndDesignatedIdDontConflict() throws ManagerSaveException {
         taskManager.addTask(new Task("Написать пункты расписания", "Не самое основное дело", Status.IN_PROGRESS));
         taskManager.getTask(2).setId(2);
         assertEquals(2, taskManager.getTaskList().size());
     }
 
     @Test
-    public void testTaskDoesntChange() {
+    public void testTaskDoesntChange() throws ManagerSaveException {
         System.out.println("Сравниваем задачу после добавления: " + genericTask.equals(taskManager.getTask(1)));
 
     }
 
     @Test
-    public void testHistoryManagerSavesPreviousVersionsOfTasks() {
+    public void testHistoryManagerSavesPreviousVersionsOfTasks() throws ManagerSaveException {
         taskManager.getTask(1);
         Task newTask = new Task("Написать пункты расписания", "Не самое основное дело", Status.IN_PROGRESS);
         newTask.setId(1);
         taskManager.updateTask(newTask);
-        assertEquals(genericTask, taskManager.getHistory().getFirst());
+        assertEquals(genericTask, taskManager.getHistory().get(0));
     }
 
     @Test
-    public void deletedSubtasksShouldNotStoreOldIdsInside() {
+    public void deletedSubtasksShouldNotStoreOldIdsInside() throws ManagerSaveException {
         Epic epic = new Epic("Написать программу", "Непреодолимое дело");
         Subtask subtask = new Subtask("Пробовать писать код", "Это сложно", Status.IN_PROGRESS, 2);
         taskManager.addEpic(epic);
@@ -111,7 +112,7 @@ class TaskManagerTest {
     }
 
     @Test
-    public void noIrrelevantSubtasksInEpic() {
+    public void noIrrelevantSubtasksInEpic() throws ManagerSaveException {
         Epic epic = new Epic("Написать программу", "Непреодолимое дело");
         Subtask subtask = new Subtask("Пробовать писать код", "Это сложно", Status.IN_PROGRESS, 2);
         taskManager.addEpic(epic);
