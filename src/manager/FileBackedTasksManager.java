@@ -120,7 +120,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         List<String> lines = formatter.readFile(file);
         lines.remove(0);
         FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager(file);
-        for(String line : lines) {
+        for (String line : lines) {
             Task task = formatter.fromString(line);
             if (task.getId() > maxId) maxId = task.getId();
             if (task.getTaskType() == TaskType.TASK) {
@@ -137,7 +137,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     private void save() throws ManagerSaveException {
-        try(BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file))) {
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file))) {
             bufferedWriter.write("id,type,name,status,description,epic");
             bufferedWriter.write("\n");
             for (Task task : getTasks().values()) {
