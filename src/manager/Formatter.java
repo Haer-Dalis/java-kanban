@@ -34,7 +34,7 @@ public class Formatter {
         List<String> allLines = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
-            while(reader.ready()) {
+            while (reader.ready()) {
                 line = reader.readLine();
                 allLines.add(line);
             }
