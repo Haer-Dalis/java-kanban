@@ -33,9 +33,9 @@ class FileBackedTasksManagerTest {
         Task task2 = new Task("Second Task", "Description 2", Status.IN_PROGRESS);
         fileBackedTasksManager1.addTask(task1);
         fileBackedTasksManager1.addTask(task2);
-        fileBackedTasksManager2 = fileBackedTasksManager2.load(new File(String.valueOf(tempFilePath)));
-        assertEquals(task1, fileBackedTasksManager1.getTask(1));
-        assertEquals(task2, fileBackedTasksManager1.getTask(2));
+        fileBackedTasksManager2 = FileBackedTasksManager.loadFromFile(new File(String.valueOf(tempFilePath)));
+        assertEquals(task1, fileBackedTasksManager2.getTask(1));
+        assertEquals(task2, fileBackedTasksManager2.getTask(2));
     }
 
     @Test
@@ -44,8 +44,8 @@ class FileBackedTasksManagerTest {
         Subtask subtask = new Subtask("First subtask", "Its description 2", Status.NEW, 1);
         fileBackedTasksManager1.addEpic(epic);
         fileBackedTasksManager1.addSubtask(subtask);
-        fileBackedTasksManager2 = fileBackedTasksManager2.load(new File(String.valueOf(tempFilePath)));
-        assertEquals(epic, fileBackedTasksManager1.getEpic(1));
-        assertEquals(subtask, fileBackedTasksManager1.getSubtask(2));
+        fileBackedTasksManager2 = FileBackedTasksManager.loadFromFile(new File(String.valueOf(tempFilePath)));
+        assertEquals(epic, fileBackedTasksManager2.getEpic(1));
+        assertEquals(subtask, fileBackedTasksManager2.getSubtask(2));
     }
 }
