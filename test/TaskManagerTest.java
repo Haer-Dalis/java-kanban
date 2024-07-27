@@ -7,6 +7,7 @@ import task.Status;
 import task.Subtask;
 import task.Task;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -96,6 +97,29 @@ class TaskManagerTest {
         Task newTask = new Task("Написать пункты расписания", "Не самое основное дело", Status.IN_PROGRESS);
         newTask.setId(1);
         taskManager.updateTask(newTask);
-        assertEquals(genericTask, taskManager.getHistory().get(0));
+        assertEquals(genericTask, taskManager.getHistory().getFirst());
     }
+
+    @Test
+    public void deletedSubtasksShouldNotStoreOldIdsInside() {
+        Epic epic = new Epic("Написать программу", "Непреодолимое дело");
+        Subtask subtask = new Subtask("Пробовать писать код", "Это сложно", Status.IN_PROGRESS, 2);
+        taskManager.addEpic(epic);
+        taskManager.addSubtask(subtask);
+        taskManager.deleteSubtask(3);
+        assertEquals(Collections.emptyList(), taskManager.getSubtaskList());
+    }
+
+    @Test
+    public void noIrrelevantSubtasksInEpic() {
+        Epic epic = new Epic("Написать программу", "Непреодолимое дело");
+        Subtask subtask = new Subtask("Пробовать писать код", "Это сложно", Status.IN_PROGRESS, 2);
+        taskManager.addEpic(epic);
+        taskManager.addSubtask(subtask);
+        taskManager.deleteSubtask(3);
+        assertEquals(Collections.emptyList(), taskManager.getEpic(2).getSubtasksOfEpic());
+    }
+
+
 }
+
