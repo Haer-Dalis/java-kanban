@@ -10,6 +10,7 @@ import java.util.List;
 
 public class Formatter {
     static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy; HH:mm");
+
     protected Task fromString(String value) {
         String[] values = value.split(",");
         Integer id = Integer.valueOf(values[0]);
@@ -42,7 +43,7 @@ public class Formatter {
         List<String> allLines = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
-            while(reader.ready()) {
+            while (reader.ready()) {
                 line = reader.readLine();
                 allLines.add(line);
             }
