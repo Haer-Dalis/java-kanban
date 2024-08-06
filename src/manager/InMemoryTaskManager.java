@@ -217,17 +217,20 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void deleteAllSubtasks() throws ManagerSaveException {
-        for (Subtask subtask : subtasks.values()) {
+        subtasks.values().forEach(subtask -> {
             sortedTasks.remove(subtask);
             historyManager.remove(subtask.getId());
-        }
+        });
+
         subtasks.clear();
-        for (int id : epics.keySet()) {
-            Epic epic = epics.get(id);
-            epic.deleteAllEpicSubtasks();
-            epic.setStatus(Status.NEW);
-            updateEpicTime(id);
-        }
+
+        epics.keySet().stream()
+                .map(epics::get)
+                .forEach(epic -> {
+                    epic.deleteAllEpicSubtasks();
+                    epic.setStatus(Status.NEW);
+                    updateEpicTime(epic.getId());
+                });
     }
 
     protected Integer addTaskWithId(Task task) {

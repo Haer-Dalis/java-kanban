@@ -70,38 +70,89 @@ class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksManager>
     }
 
     @Test
-    @Override
     @DisplayName("обновление задания")
     protected void updateTaskCheck() throws ManagerSaveException {
         super.updateTaskCheck();
     }
 
     @Test
-    @Override
     @DisplayName("получение задания")
     protected void getTaskCheck() throws ManagerSaveException {
         super.getTaskCheck();
     }
 
     @Test
-    @Override
     @DisplayName("удаление задачи")
     protected void deleteTaskCheck() throws ManagerSaveException {
         super.deleteTaskCheck();
     }
 
     @Test
-    @Override
     @DisplayName("Добавление эпика")
     protected void addEpicCheck() throws ManagerSaveException {
         super.addEpicCheck();
     }
 
     @Test
-    @Override
     @DisplayName("Получение эпика")
     protected void getEpicCheck() throws ManagerSaveException {
         super.getEpicCheck();
     }
 
+    @Test
+    public void addNewTask() throws ManagerSaveException {
+        super.addNewTask();
+    }
+
+    @Test
+    public void testTaskEqualityById() throws ManagerSaveException {
+        super.testTaskEqualityById();
+    }
+
+    @Test
+    public void testManagersAlwaysReturnExemplarsWhichAreReady() throws ManagerSaveException {
+        super.testManagersAlwaysReturnExemplarsWhichAreReady();
+    }
+
+    @Test
+    public void testEpicSubtaskEqualityById() throws ManagerSaveException {
+        super.testEpicSubtaskEqualityById();
+    }
+
+    @Test
+    public void testTaskManagerAddsTasksOfDifferentTypesAndCanFindThemById() throws ManagerSaveException {
+        super.testTaskManagerAddsTasksOfDifferentTypesAndCanFindThemById();
+    }
+
+    @Test
+    public void testGenegtedIdAndDesignatedIdDontConflict() throws ManagerSaveException {
+        super.testGenegtedIdAndDesignatedIdDontConflict();
+    }
+
+    @Test
+    public void testHistoryManagerSavesPreviousVersionsOfTasks() throws ManagerSaveException {
+        super.testHistoryManagerSavesPreviousVersionsOfTasks();
+    }
+
+    @Test
+    public void deletedSubtasksShouldNotStoreOldIdsInside() throws ManagerSaveException {
+        super.deletedSubtasksShouldNotStoreOldIdsInside();
+    }
+
+    @Test
+    public void noIrrelevantSubtasksInEpic() throws ManagerSaveException {
+        super.noIrrelevantSubtasksInEpic();
+    }
+
+    @Test
+    @DisplayName("Тест пересечения интервалов")
+    public void overlappingCheck() throws ManagerSaveException {
+        super.overlappingCheck();
+    }
+
+    @Test
+    @DisplayName("Тест статусов эпика")
+    public void epicStatusCheck() throws ManagerSaveException {
+        super.epicStatusCheck();
+    }
 }
