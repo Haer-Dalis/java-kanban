@@ -1,5 +1,4 @@
 package manager;
-
 import task.*;
 
 import java.util.ArrayList;
@@ -19,6 +18,9 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public void add(Task task) {
+        if (task == null) {
+            return;
+        }
         if (nodes.containsKey(task.getId())) {
             remove(task.getId());
         }
@@ -63,6 +65,9 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
     private List<Task> getTasks() {
+        if (first == null) {
+            return new ArrayList<>();
+        }
         List<Task> history = new ArrayList<>();
         Node node = first;
         while (true) {

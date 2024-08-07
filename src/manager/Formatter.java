@@ -2,10 +2,15 @@ package manager;
 
 import task.*;
 import java.io.*;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Formatter {
+    static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy; HH:mm");
+
     protected Task fromString(String value) {
         String[] values = value.split(",");
         Integer id = Integer.valueOf(values[0]);
@@ -14,7 +19,9 @@ public class Formatter {
         Status status = Status.valueOf(values[3]);
         String description = values[4];
         if (type == TaskType.TASK) {
-            Task task = new Task(taskName, description, status);
+            LocalDateTime startTime = LocalDateTime.parse(values[5], formatter);
+            Duration duration = Duration.parse(values[6]);
+            Task task = new Task(taskName, description, status, startTime, duration);
             task.setId(id);
             return task;
         } else if (type == TaskType.EPIC) {
@@ -22,8 +29,10 @@ public class Formatter {
             epic.setId(id);
             return epic;
         } else if (type == TaskType.SUBTASK) {
+            LocalDateTime startTime = LocalDateTime.parse(values[6], formatter);
+            Duration duration = Duration.parse(values[7]);
             Integer epicId = Integer.valueOf(values[5]);
-            Subtask subtask = new Subtask(taskName,description, status, epicId);
+            Subtask subtask = new Subtask(taskName,description, status, epicId, startTime, duration);
             subtask.setId(id);
             return subtask;
         }
@@ -45,15 +54,23 @@ public class Formatter {
     }
 
     protected String taskToString(Task task) {
-        return (task.getId() + "," + task.getTaskType() + "," + task.getName() + "," + task.getStatus() + "," + task.getDescription());
+        String startTimeString = task.getStartTime() != null ? task.getStartTime().format(formatter) : "";
+        String durationString = task.getDuration() != null ? task.getDuration().toString() : "";
+        return task.getId() + "," + task.getTaskType() + "," + task.getName() + "," + task.getStatus() + ","
+                + task.getDescription() + "," + startTimeString + "," + durationString;
     }
 
     protected String epicToString(Epic epic) {
-        return (epic.getId() + "," + epic.getTaskType() + "," + epic.getName() + "," + epic.getStatus() + "," + epic.getDescription());
+        return (epic.getId() + "," + epic.getTaskType() + "," + epic.getName() + "," + epic.getStatus() + ","
+                + epic.getDescription());
     }
 
     protected String subtaskToString(Subtask subtask) {
-        return (subtask.getId() + "," + subtask.getTaskType() + "," + subtask.getName() + "," + subtask.getStatus() + "," + subtask.getDescription() + "," + subtask.getEpicId());
+        String startTimeString = subtask.getStartTime() != null ? subtask.getStartTime().format(formatter) : "";
+        System.out.println(subtask.getStartTime().format(formatter));
+        String durationString = subtask.getDuration() != null ? subtask.getDuration().toString() : "";
+        return (subtask.getId() + "," + subtask.getTaskType() + "," + subtask.getName() + "," + subtask.getStatus() + ","
+                + subtask.getDescription() + "," + subtask.getEpicId() + "," + startTimeString + "," + durationString);
     }
 
 }

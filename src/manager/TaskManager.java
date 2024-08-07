@@ -4,9 +4,12 @@ import exception.ManagerSaveException;
 import task.*;
 
 import java.util.List;
+import java.util.TreeSet;
 
 public interface TaskManager {
     List<Task> getHistory();
+
+    TreeSet<Task> getPrioritizedTasks();
 
     Integer addTask(Task task) throws ManagerSaveException;
 
