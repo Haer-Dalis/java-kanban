@@ -1,7 +1,6 @@
 import exception.ManagerSaveException;
 import manager.FileBackedTasksManager;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import task.Epic;
 import task.Status;
@@ -35,7 +34,7 @@ class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksManager>
     }
 
     @Test
-    void saveAndLoadSeveralTasks() throws ManagerSaveException {
+    void saveAndLoadSeveralTasks() throws IOException {
         fileBackedTasksManager1 = new FileBackedTasksManager(new File(String.valueOf(tempFilePath)));
         fileBackedTasksManager2 = new FileBackedTasksManager(new File(String.valueOf(tempFilePath)));
         Task task1 = new Task("First Task", "Description 1", Status.NEW,
@@ -50,7 +49,7 @@ class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksManager>
     }
 
     @Test
-    void saveAndLoadSeveralEpicsAndSubtasks() throws ManagerSaveException {
+    void saveAndLoadSeveralEpicsAndSubtasks() throws IOException {
         fileBackedTasksManager1 = new FileBackedTasksManager(new File(String.valueOf(tempFilePath)));
         fileBackedTasksManager2 = new FileBackedTasksManager(new File(String.valueOf(tempFilePath)));
         Epic epic = new Epic("First epic", "Its description");
