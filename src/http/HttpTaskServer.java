@@ -116,7 +116,7 @@ public class HttpTaskServer {
             if (parts.length > 2 && parts[1].equals("subtasks")) {
                 int query = Integer.parseInt(parts[2]);
                 if ("GET".equals(httpExchange.getRequestMethod())) {
-                    if (taskManager.getSubtasks().containsKey(query)){
+                    if (taskManager.getSubtasks().containsKey(query)) {
                         gson = gsonBuilder.registerTypeAdapter(Subtask.class, new SubtaskSerializer()).create();
                         String gsonString = gson.toJson(taskManager.getSubtask(query), Subtask.class);
                         sendText(gsonString, httpExchange);
