@@ -43,7 +43,7 @@ class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksManager>
                 LocalDateTime.of(2025, 8, 2, 2, 5), Duration.ofHours(7));
         fileBackedTasksManager1.addTask(task1);
         fileBackedTasksManager1.addTask(task2);
-        fileBackedTasksManager2 = FileBackedTasksManager.loadFromFile(new File(String.valueOf(tempFilePath)));
+        fileBackedTasksManager2 = fileBackedTasksManager2.loadFromFile(new File(String.valueOf(tempFilePath)));
         assertEquals(task1, fileBackedTasksManager2.getTask(1));
         assertEquals(task2, fileBackedTasksManager2.getTask(2));
     }
@@ -57,7 +57,7 @@ class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksManager>
                 LocalDateTime.of(2025, 8, 2, 2, 5), Duration.ofHours(7));
         fileBackedTasksManager1.addEpic(epic);
         fileBackedTasksManager1.addSubtask(subtask);
-        fileBackedTasksManager2 = FileBackedTasksManager.loadFromFile(new File(String.valueOf(tempFilePath)));
+        fileBackedTasksManager2 = fileBackedTasksManager2.loadFromFile(new File(String.valueOf(tempFilePath)));
         assertEquals(epic, fileBackedTasksManager2.getEpic(1));
         assertEquals(subtask, fileBackedTasksManager2.getSubtask(2));
     }

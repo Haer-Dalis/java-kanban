@@ -4,7 +4,7 @@ import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
-import exception.ManagerSaveException;
+import exception.HttpException;
 import manager.InMemoryTaskManager;
 import serializers.*;
 import task.Epic;
@@ -49,7 +49,7 @@ public class HttpTaskServer {
     }
 
     private void chooseMethodTasks(HttpExchange httpExchange) throws IOException {
-        try {
+        try (httpExchange) {
             String path = httpExchange.getRequestURI().getPath();
             String[] parts = path.split("/");
             if (parts.length > 2 && parts[1].equals("tasks")) {
@@ -102,15 +102,13 @@ public class HttpTaskServer {
                 httpExchange.sendResponseHeaders(405, 0);
             }
         } catch (NullPointerException | IOException e) {
-            throw new ManagerSaveException("Что-то пошло не совсем так");
-        } finally {
-            httpExchange.close();
+            throw new HttpException("Что-то пошло не совсем так");
         }
     }
 
 
-    private void chooseMethodSubtasks(HttpExchange httpExchange) {
-        try {
+    private void chooseMethodSubtasks(HttpExchange httpExchange) throws HttpException {
+        try (httpExchange) {
             String path = httpExchange.getRequestURI().getPath();
             String[] parts = path.split("/");
             if (parts.length > 2 && parts[1].equals("subtasks")) {
@@ -162,16 +160,14 @@ public class HttpTaskServer {
                         "а получил: " + httpExchange.getRequestMethod());
                 httpExchange.sendResponseHeaders(405, 0);
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } finally {
-            httpExchange.close();
+        } catch (NullPointerException | IOException e) {
+            throw new HttpException("Что-то пошло не совсем так");
         }
     }
 
 
     private void chooseMethodEpics(HttpExchange httpExchange) throws IOException {
-        try {
+        try (httpExchange) {
             String path = httpExchange.getRequestURI().getPath();
             String[] parts = path.split("/");
 
@@ -227,13 +223,13 @@ public class HttpTaskServer {
                 httpExchange.sendResponseHeaders(405, 0);
             }
 
-        } finally {
-            httpExchange.close();
+        } catch (NullPointerException | IOException e) {
+            throw new HttpException("Что-то пошло не совсем так");
         }
     }
 
-    private void prioritizedTasks(HttpExchange httpExchange) {
-        try {
+    private void prioritizedTasks(HttpExchange httpExchange) throws HttpException {
+        try (httpExchange) {
             String path = httpExchange.getRequestURI().getPath();
             String[] parts = path.split("/");
             if (parts[1].equals("prioritized") && "GET".equals(httpExchange.getRequestMethod())) {
@@ -249,15 +245,13 @@ public class HttpTaskServer {
                         "а получил: " + httpExchange.getRequestMethod());
                 httpExchange.sendResponseHeaders(405, 0);
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } finally {
-            httpExchange.close();
+        } catch (NullPointerException | IOException e) {
+            throw new HttpException("Что-то пошло не совсем так");
         }
     }
 
-    private void loadHistory(HttpExchange httpExchange) {
-        try {
+    private void loadHistory(HttpExchange httpExchange) throws HttpException {
+        try (httpExchange) {
             String path = httpExchange.getRequestURI().getPath();
             String[] parts = path.split("/");
 
@@ -276,10 +270,8 @@ public class HttpTaskServer {
                         "а получил: " + httpExchange.getRequestMethod());
                 httpExchange.sendResponseHeaders(405, 0);
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } finally {
-            httpExchange.close();
+        } catch (NullPointerException | IOException e) {
+            throw new HttpException("Что-то пошло не совсем так");
         }
     }
 
