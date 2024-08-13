@@ -272,15 +272,15 @@ public class InMemoryTaskManager implements TaskManager {
         this.counter = counter;
     }
 
-    protected Map<Integer, Task> getTasks() {
+    public Map<Integer, Task> getTasks() {
         return tasks;
     }
 
-    protected Map<Integer, Epic> getEpics() {
+    public Map<Integer, Epic> getEpics() {
         return epics;
     }
 
-    protected Map<Integer, Subtask> getSubtasks() {
+    public Map<Integer, Subtask> getSubtasks() {
         return subtasks;
     }
 
@@ -338,5 +338,9 @@ public class InMemoryTaskManager implements TaskManager {
             else if (o1.getStartTime().isAfter(o2.getStartTime())) return 1;
             else return 0;
         }
+    }
+
+    public TreeSet<Task> getSortedTasks() {
+        return sortedTasks;
     }
 }

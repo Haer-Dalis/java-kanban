@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Formatter {
-    static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy; HH:mm");
+    protected static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy; HH:mm");
 
     protected Task fromString(String value) {
         String[] values = value.split(",");

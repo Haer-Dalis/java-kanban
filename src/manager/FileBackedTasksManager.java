@@ -13,7 +13,7 @@ import java.util.List;
 
 public class FileBackedTasksManager extends InMemoryTaskManager {
     private final File file;
-    private static Formatter formatter = new Formatter();
+    private final Formatter formatter = new Formatter();
 
     public FileBackedTasksManager(File file) {
         this.file = file;
@@ -115,7 +115,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         save();
     }
 
-    public static FileBackedTasksManager loadFromFile(File file) {
+    public FileBackedTasksManager loadFromFile(File file) throws IOException {
         int maxId = 0;
         List<String> lines = formatter.readFile(file);
         lines.remove(0);

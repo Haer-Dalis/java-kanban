@@ -1,7 +1,6 @@
 import exception.ManagerSaveException;
 import manager.FileBackedTasksManager;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import task.Epic;
 import task.Status;
@@ -35,7 +34,7 @@ class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksManager>
     }
 
     @Test
-    void saveAndLoadSeveralTasks() throws ManagerSaveException {
+    void saveAndLoadSeveralTasks() throws IOException {
         fileBackedTasksManager1 = new FileBackedTasksManager(new File(String.valueOf(tempFilePath)));
         fileBackedTasksManager2 = new FileBackedTasksManager(new File(String.valueOf(tempFilePath)));
         Task task1 = new Task("First Task", "Description 1", Status.NEW,
@@ -44,13 +43,13 @@ class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksManager>
                 LocalDateTime.of(2025, 8, 2, 2, 5), Duration.ofHours(7));
         fileBackedTasksManager1.addTask(task1);
         fileBackedTasksManager1.addTask(task2);
-        fileBackedTasksManager2 = FileBackedTasksManager.loadFromFile(new File(String.valueOf(tempFilePath)));
+        fileBackedTasksManager2 = fileBackedTasksManager2.loadFromFile(new File(String.valueOf(tempFilePath)));
         assertEquals(task1, fileBackedTasksManager2.getTask(1));
         assertEquals(task2, fileBackedTasksManager2.getTask(2));
     }
 
     @Test
-    void saveAndLoadSeveralEpicsAndSubtasks() throws ManagerSaveException {
+    void saveAndLoadSeveralEpicsAndSubtasks() throws IOException {
         fileBackedTasksManager1 = new FileBackedTasksManager(new File(String.valueOf(tempFilePath)));
         fileBackedTasksManager2 = new FileBackedTasksManager(new File(String.valueOf(tempFilePath)));
         Epic epic = new Epic("First epic", "Its description");
@@ -58,7 +57,7 @@ class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksManager>
                 LocalDateTime.of(2025, 8, 2, 2, 5), Duration.ofHours(7));
         fileBackedTasksManager1.addEpic(epic);
         fileBackedTasksManager1.addSubtask(subtask);
-        fileBackedTasksManager2 = FileBackedTasksManager.loadFromFile(new File(String.valueOf(tempFilePath)));
+        fileBackedTasksManager2 = fileBackedTasksManager2.loadFromFile(new File(String.valueOf(tempFilePath)));
         assertEquals(epic, fileBackedTasksManager2.getEpic(1));
         assertEquals(subtask, fileBackedTasksManager2.getSubtask(2));
     }
